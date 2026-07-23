@@ -62,19 +62,20 @@
         <!-- Destaque -->
         <section id="hero-section" aria-label="Destaque"></section>
 
-        <!-- Filtros e Grid -->
+        <!-- Menu Rápido de Categorias (Texto) -->
+        <nav class="category-nav" aria-label="Filtro Rápido de Categorias">
+            <a class="cat-link active" data-cat="todas">Últimas Notícias</a>
+            <a class="cat-link" data-cat="Eventos">Eventos</a>
+            <a class="cat-link" data-cat="Resultados">Resultados</a>
+            <a class="cat-link" data-cat="Editais e Seleções">Editais</a>
+        </nav>
+
+        <!-- Filtros Secundários e Grid -->
         <section id="ultimas" aria-label="Últimas Notícias">
             <div class="filters-bar">
-                <input type="search" id="search-input" placeholder="🔍 Pesquisar matérias, nomes, eventos...">
+                <input type="search" id="search-input" placeholder="🔍 Pesquisar matérias, nomes, locais...">
                 <div class="filters-group">
-                    <select id="cat-select" aria-label="Categoria">
-                        <option value="todas">Todas as Categorias</option>
-                        <option value="Eventos">Eventos</option>
-                        <option value="Editais e Seleções">Editais e Seleções</option>
-                        <option value="Resultados">Resultados</option>
-                        <option value="Institucional">Institucional</option>
-                    </select>
-                    <select id="campus-select" aria-label="Campus">
+                    <select id="campus-select" aria-label="Filtrar por Campus">
                         <option value="todos">Toda a Rede</option>
                         <!-- Populado pelo app.js -->
                     </select>
@@ -99,7 +100,7 @@
                         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         @ifbaiano
                     </a>
-                    <a href="https://youtube.com/ifbaiano" target="_blank" class="social-icon">
+                    <a href="https://www.youtube.com/@TVBemBaiano" target="_blank" class="social-icon">
                         <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                         TV Bem Baiano
                     </a>
@@ -114,14 +115,13 @@
 
     <div id="cookie-banner" class="cookie-banner" hidden>
         <div class="cookie-content">
-            <p>Usamos cookies para personalizar sua experiência. Ao continuar, você concorda com a <a href="./politica-privacidade.html">Política de Privacidade</a> do IF Baiano.</p>
-            <button id="btn-accept-cookies" class="btn-primary">Entendi</button>
+            <p><strong>Aviso de Cookies e Privacidade:</strong> O IF Baiano respeita seus dados. Usamos cookies funcionais apenas para salvar suas preferências (como o modo de alto contraste) no seu próprio navegador, sem rastreamento pessoal, garantindo adequação à LGPD. <a href="./politica-privacidade.html" style="color:var(--color-brand-green); text-decoration:underline;">Leia mais na Política de Privacidade</a>.</p>
+            <button id="btn-accept-cookies" class="btn-primary">Concordar e Fechar</button>
         </div>
     </div>
 
     <script src="./app.js"></script>
     <script>
-        // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Fail:', err));
         }

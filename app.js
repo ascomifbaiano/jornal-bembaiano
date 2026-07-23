@@ -2,12 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initA11y();
     initLGPD();
     setupFilters();
-    loadNewsData('data/geral_recentes.csv', true); // Load home
+    loadNewsData('data/geral_recentes.csv', true);
 });
 
 let currentData = [];
 let currentPage = 1;
 const ITEMS_PER_PAGE = 12;
+let currentCategory = 'todas'; // Estado da categoria
 
 // --- Acessibilidade ---
 function initA11y() {
@@ -63,7 +64,7 @@ function getTags(titulo) {
     return { name: tag, cssClass: tagClass };
 }
 
-// --- CSV Parser (simples, suporta aspas duplas pandas) ---
+// --- CSV Parser ---
 function csvToJson(csvText) {
     const lines = csvText.trim().split('\n');
     const result = [];
@@ -118,7 +119,6 @@ async function loadNewsData(csvPath, isHome = false) {
         
         newsData = newsData.filter(item => item.titulo && item.titulo !== '');
         
-        // Atribui tags dinâmicas
         newsData = newsData.map(item => {
             item.tag = getTags(item.titulo);
             return item;
@@ -128,12 +128,9 @@ async function loadNewsData(csvPath, isHome = false) {
         currentPage = 1;
         
         if (isHome && newsData.length > 0) {
-            // Capa: Busca 1 destaque da Reitoria
             const reitoriaNews = newsData.find(n => n.campus === 'Reitoria');
             const destaque = reitoriaNews ? reitoriaNews : newsData[0];
             renderHero(destaque);
-            
-            // Remove o destaque do grid
             currentData = currentData.filter(n => n !== destaque);
         } else {
             document.getElementById('hero-section').innerHTML = '';
@@ -153,9 +150,9 @@ async function loadNewsData(csvPath, isHome = false) {
 function setupFilters() {
     const searchInput = document.getElementById('search-input');
     const campusSelect = document.getElementById('campus-select');
-    const catSelect = document.getElementById('cat-select');
+    const catLinks = document.querySelectorAll('.cat-link');
     
-    // Lista de campi fixa para UI rápida
+    // Lista de campi fixa
     const campiList = ["Alagoinhas", "Bom Jesus da Lapa", "Catu", "Governador Mangabeira", "Guanambi", "Itaberaba", "Itapetinga", "Reitoria", "Santa Inês", "Senhor do Bonfim", "Serrinha", "Teixeira de Freitas", "Uruçuca", "Valença", "Xique-Xique"];
     campiList.forEach(c => {
         const opt = document.createElement('option');
@@ -165,24 +162,27 @@ function setupFilters() {
     });
 
     const triggerFilter = () => {
-        currentPage = 1; // Reseta paginação
-        
-        // Se mudou o campus, e for diferente de "todos", carrega o micro-csv do campus
-        // Para simplificar: se for "todos", carrega recentes, senão carrega o campus específico
-        // Mas apenas dispararemos fetch se realmente mudar a fonte de dados.
-        // Vamos filtrar in-memory primeiro, e se o usuário quiser *todas* daquele campus, pode expandir.
-        // Como o `geral_recentes` tem os últimos de todos, filtraremos nele mesmo. Se a pesquisa ficar vazia, avisa.
+        currentPage = 1;
         applyFiltersAndRender();
     };
 
-    searchInput.addEventListener('input', () => applyFiltersAndRender());
-    catSelect.addEventListener('change', triggerFilter);
+    searchInput.addEventListener('input', triggerFilter);
+    
+    // Navegação em Texto (Categorias)
+    catLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            catLinks.forEach(l => l.classList.remove('active'));
+            e.target.classList.add('active');
+            currentCategory = e.target.getAttribute('data-cat');
+            triggerFilter();
+        });
+    });
+
     campusSelect.addEventListener('change', (e) => {
         const val = e.target.value;
         if(val === 'todos') {
             loadNewsData('data/geral_recentes.csv', true);
         } else {
-            // Tenta carregar o arquivo específico do campus
             const filename = val.toLowerCase().replace(/ /g, '_').replace(/-/g, '_');
             loadNewsData(`data/campi/${filename}.csv`, false);
         }
@@ -191,35 +191,35 @@ function setupFilters() {
 
 function applyFiltersAndRender() {
     const term = document.getElementById('search-input').value.toLowerCase();
-    const cat = document.getElementById('cat-select').value;
     
-    // In-memory filter na base carregada (geral ou específica do campus)
     let filtered = currentData;
     
     if (term) {
         filtered = filtered.filter(n => n.titulo.toLowerCase().includes(term) || (n.resumo && n.resumo.toLowerCase().includes(term)));
     }
-    if (cat !== 'todas') {
-        filtered = filtered.filter(n => n.tag.name === cat);
+    if (currentCategory !== 'todas') {
+        filtered = filtered.filter(n => n.tag.name === currentCategory);
     }
     
     renderGrid(filtered);
 }
 
 // --- Renderização ---
-function getFallbackImage() {
-    // Retorna a marca horizontal estilizada (CSS irá aplicar o blend)
-    return './marca-if-baiano-horizontal.png';
-}
-
 function renderHero(item) {
     const heroSection = document.getElementById('hero-section');
-    const imageSrc = item.imagem ? item.imagem : getFallbackImage();
-    const imgClass = item.imagem ? 'hero-image' : 'hero-image fallback-img';
+    
+    let imageHTML = '';
+    if (item.imagem) {
+        imageHTML = `<img src="${item.imagem}" alt="Imagem Destaque" class="hero-image" loading="lazy">`;
+    } else {
+        imageHTML = `<div class="img-wrapper-fallback"><img src="./marca-if-baiano-vertical.png" alt="IF Baiano Logo" class="fallback-img" loading="lazy"></div>`;
+    }
     
     heroSection.innerHTML = `
         <article class="hero-card">
-            <div class="img-wrapper"><img src="${imageSrc}" alt="Imagem Destaque" class="${imgClass}" loading="lazy"></div>
+            <div class="hero-image-container">
+                ${imageHTML}
+            </div>
             <div class="hero-content">
                 <div class="badges">
                     <span class="tag-campus">${item.campus}</span>
@@ -251,13 +251,19 @@ function renderGrid(dataset) {
     const paginatedItems = dataset.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     paginatedItems.forEach(item => {
-        const imageSrc = item.imagem ? item.imagem : getFallbackImage();
-        const imgClass = item.imagem ? 'news-card-img' : 'news-card-img fallback-img';
+        let imageHTML = '';
+        if (item.imagem) {
+            imageHTML = `<img src="${item.imagem}" alt="Capa" class="news-card-img" loading="lazy">`;
+        } else {
+            imageHTML = `<div class="img-wrapper-fallback"><img src="./marca-if-baiano-vertical.png" alt="IF Baiano Logo" class="fallback-img" loading="lazy"></div>`;
+        }
         
         const card = document.createElement('article');
         card.className = 'news-card';
         card.innerHTML = `
-            <div class="img-wrapper"><img src="${imageSrc}" alt="Capa" class="${imgClass}" loading="lazy"></div>
+            <div class="news-card-img-container">
+                ${imageHTML}
+            </div>
             <div class="news-card-body">
                 <div class="badges">
                     <span class="tag-campus">${item.campus}</span>
@@ -280,7 +286,7 @@ function renderGrid(dataset) {
             const btnPrev = document.createElement('button');
             btnPrev.textContent = '« Anterior';
             btnPrev.className = 'btn-page';
-            btnPrev.onclick = () => { currentPage--; renderGrid(dataset); window.scrollTo(0, document.getElementById('ultimas').offsetTop); };
+            btnPrev.onclick = () => { currentPage--; renderGrid(dataset); window.scrollTo(0, document.getElementById('ultimas').offsetTop - 50); };
             pagination.appendChild(btnPrev);
         }
         
@@ -293,7 +299,7 @@ function renderGrid(dataset) {
             const btnNext = document.createElement('button');
             btnNext.textContent = 'Próxima »';
             btnNext.className = 'btn-page';
-            btnNext.onclick = () => { currentPage++; renderGrid(dataset); window.scrollTo(0, document.getElementById('ultimas').offsetTop); };
+            btnNext.onclick = () => { currentPage++; renderGrid(dataset); window.scrollTo(0, document.getElementById('ultimas').offsetTop - 50); };
             pagination.appendChild(btnNext);
         }
     }

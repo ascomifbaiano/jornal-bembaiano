@@ -4,23 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidade - Jornal Bem Baiano</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <style>
-        .page-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: var(--color-bg-primary); border-radius: 8px; }
-        .page-container h2 { color: var(--color-brand-green); margin-bottom: 1rem; }
+        .page-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: var(--color-bg-primary); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .page-container h2 { color: var(--color-brand-green); margin-bottom: 1.5rem; font-size: 2.2rem; }
+        .page-container h3 { color: var(--color-text-main); margin-top: 2rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .page-container p, .page-container ul { font-size: 1.1rem; color: var(--color-text-light); line-height: 1.8; margin-bottom: 1.5rem; }
+        .page-container ul { padding-left: 2rem; }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="header-container">
-            <div class="brand"><a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo"></a><h1>Jornal Bem Baiano</h1></div>
-            <nav><ul><li><a href="./index.html">Início</a></li></ul></nav>
+            <div class="brand">
+                <a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo"></a>
+                <h1>Jornal Bem Baiano</h1>
+            </div>
+            <nav aria-label="Navegação Principal">
+                <ul>
+                    <li><a href="./index.html">Início</a></li>
+                    <li><a href="./index.html#ultimas">Notícias</a></li>
+                    <li><a href="./contato.html">Contato</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
+
     <main class="page-container">
         <h2>Política de Privacidade</h2>
-        <p>O Jornal Bem Baiano respeita a sua privacidade e está adequado à LGPD. Não coletamos dados sensíveis. O único cookie utilizado no portal é funcional (armazenado localmente) para salvar suas preferências de acessibilidade e aceite deste banner.</p>
+        
+        <p>O <strong>Instituto Federal de Educação, Ciência e Tecnologia Baiano (IF Baiano)</strong>, por meio de sua Diretoria de Comunicação Social (DICOM), está comprometido com a proteção dos seus dados pessoais e com a transparência sobre como lidamos com as informações no portal <strong>Jornal Bem Baiano</strong>.</p>
+        
+        <p>Esta política foi elaborada em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018)</strong> e o Marco Civil da Internet.</p>
+
+        <h3>1. Dados Coletados</h3>
+        <p>O Jornal Bem Baiano possui um perfil estritamente de caráter público e jornalístico. <strong>Não solicitamos, não processamos e não armazenamos dados sensíveis</strong> ou dados de identificação pessoal (como nome, CPF, e-mail) para a navegação do portal.</p>
+        
+        <h3>2. O Uso de Cookies</h3>
+        <p>Utilizamos apenas <strong>cookies funcionais</strong> e de sessão armazenados localmente em seu próprio dispositivo de navegação (Navegador/Browser). Estes cookies servem exclusivamente para:</p>
+        <ul>
+            <li>Lembrar a sua escolha ao aceitar nosso banner de aviso sobre políticas (para não exibi-lo novamente).</li>
+            <li>Salvar suas preferências na nossa barra de Acessibilidade (como a escolha de Alto Contraste ou ampliação de fonte).</li>
+        </ul>
+        <p>Nenhum cookie de rastreamento para venda de perfil comportamental ou anúncios de terceiros é utilizado por este domínio.</p>
+
+        <h3>3. Tecnologias de Terceiros</h3>
+        <p>Este site é hospedado na infraestrutura pública do <strong>GitHub Pages</strong>. Portanto, o acesso ao site pode estar sujeito à captura de metadados genéricos de tráfego de rede e endereços IP necessários para a entrega dos pacotes de segurança (HTTPS) sob a responsabilidade da Microsoft (proprietária do GitHub). Nenhuma dessas informações é mapeada ou utilizada para fins comerciais pela equipe do IF Baiano.</p>
+
+        <h3>4. Direitos do Titular</h3>
+        <p>Qualquer titular que sinta necessidade de requerer informações, relatar violações ou acionar a ouvidoria em relação ao tratamento de dados pelo Instituto Federal Baiano deve buscar os canais oficiais da Instituição através da <strong>Ouvidoria-Geral</strong> ou encaminhar sua dúvida para a Diretoria de Comunicação através da nossa página de <a href="./contato.html">Contato</a>.</p>
+
+        <p style="margin-top: 3rem; font-size: 0.9rem;">Última atualização: Julho de 2026.</p>
     </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo Branca">
+                <p>Agregador Oficial de Notícias da Rede Federal na Bahia.</p>
+            </div>
+            <div class="footer-social">
+                <h4>Nossas Redes</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com/ifbaiano" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        @ifbaiano
+                    </a>
+                    <a href="https://www.youtube.com/@TVBemBaiano" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        TV Bem Baiano
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="./politica-privacidade.html">Política de Privacidade</a> | 
+            <a href="./termos.html">Termos de Uso</a>
+        </div>
+    </footer>
 </body>
 </html>

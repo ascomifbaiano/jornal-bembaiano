@@ -7,9 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <style>
-        .contact-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: var(--color-bg-primary); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
-        .contact-container h2 { font-size: 2.5rem; color: var(--color-brand-green); margin-bottom: 1rem; }
-        .contact-container p { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 2rem; }
+        .contact-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: var(--color-bg-primary); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: left; }
+        .contact-container h2 { font-size: 2.5rem; color: var(--color-brand-green); margin-bottom: 1rem; text-align: center; }
+        .contact-container p { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 1.5rem; line-height: 1.8; }
+        .email-link-wrapper { text-align: center; margin: 3rem 0; }
         .email-link { font-size: 1.5rem; font-weight: bold; color: var(--color-brand-red); display: inline-block; padding: 1rem 2rem; border: 2px solid var(--color-brand-red); border-radius: 4px; transition: all 0.3s; }
         .email-link:hover { background: var(--color-brand-red); color: #fff; }
     </style>
@@ -33,10 +34,21 @@
 
     <main id="main-content">
         <div class="contact-container">
-            <h2>Fale com a Redação</h2>
-            <p>O Jornal Bem Baiano é um canal integrador mantido pela Diretoria de Comunicação (DICOM) do Instituto Federal Baiano.</p>
-            <p>Para envio de sugestões de pautas, correções ou dúvidas institucionais, entre em contato através do nosso e-mail oficial:</p>
-            <a href="mailto:comunicacao@ifbaiano.edu.br" class="email-link">comunicacao@ifbaiano.edu.br</a>
+            <h2>Comunicação</h2>
+            
+            <p>O Jornal Bem Baiano é um canal integrador mantido pela Diretoria de Comunicação Social do Instituto Federal Baiano.</p>
+            
+            <p>As ações de comunicação institucional do Instituto Federal de Educação, Ciência e Tecnologia Baiano (IF Baiano) são de responsabilidade da Diretoria de Comunicação Social, localizada na Reitoria.</p>
+            
+            <p>São objetivos do setor a criação, manutenção e afirmação da identidade institucional. A comunicação cumpre o papel de criar um fórum de interlocução entre estudantes, corpo técnico-administrativo, docentes, dirigentes e comunidade civil. Faz isso por meio de publicações de fotos e textos em jornais, revistas, prospectos e sítios eletrônicos; uso de redes sociais e contato com a imprensa em geral.</p>
+            
+            <p>Para cumprir tal objetivo, temos como base as normas constitucionais que embasam a política de comunicação da SETEC/MEC. Integramos ainda o Fórum de Comunicadores da Rede Federal de Educação Profissional, Científica e Tecnológica.</p>
+
+            <p style="text-align: center; margin-top: 3rem;">Para envio de sugestões de pautas, correções ou dúvidas institucionais, entre em contato através do nosso e-mail oficial:</p>
+            
+            <div class="email-link-wrapper">
+                <a href="mailto:imprensa@ifbaiano.edu.br" class="email-link">imprensa@ifbaiano.edu.br</a>
+            </div>
         </div>
     </main>
 
@@ -45,6 +57,19 @@
             <div class="footer-brand">
                 <img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo Branca">
                 <p>Agregador Oficial de Notícias da Rede Federal na Bahia.</p>
+            </div>
+            <div class="footer-social">
+                <h4>Nossas Redes</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com/ifbaiano" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        @ifbaiano
+                    </a>
+                    <a href="https://www.youtube.com/@TVBemBaiano" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        TV Bem Baiano
+                    </a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
