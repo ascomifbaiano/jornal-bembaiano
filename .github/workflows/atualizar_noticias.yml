@@ -1,0 +1,41 @@
+name: Atualizar Jornal Bem Baiano
+
+on:
+  schedule:
+    # Executa a cada 12 horas (00:00 e 12:00 UTC)
+    - cron: '0 */12 * * *'
+  workflow_dispatch: # Permite rodar manualmente pelo painel do GitHub
+
+jobs:
+  coletar_noticias:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write # Permissão necessária para fazer commit dos dados
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar Dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas urllib3
+
+      - name: Rodar Motor de Coleta
+        run: |
+          python coletor_bem_baiano.py
+
+      - name: Commit e Push dos Novos Dados
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/historico_noticias.csv
+          # Faz commit apenas se houver mudanças no CSV
+          git commit -m "🤖 auto: atualização do histórico de notícias (12h)" || echo "Sem novas matérias para commitar."
+          git push origin main
