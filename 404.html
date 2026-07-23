@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página não encontrada - Jornal Bem Baiano</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <style>
         .error-container {
@@ -12,6 +12,9 @@
             padding: 10rem 1rem;
             max-width: 600px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .error-container h1 {
             font-size: 6rem;
@@ -19,29 +22,18 @@
             font-family: var(--font-editorial);
             margin-bottom: 1rem;
         }
-        .error-container h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-        .error-container p {
-            font-size: 1.1rem;
-            color: var(--color-text-light);
-            margin-bottom: 3rem;
-        }
+        .error-container h2 { font-size: 2rem; margin-bottom: 2rem; }
+        .error-container p { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 3rem; }
         .btn-home {
-            display: inline-block;
-            background-color: var(--color-brand-green);
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
+            display: inline-block; background-color: var(--color-brand-green); color: #fff;
+            padding: 1rem 2rem; border-radius: 4px; font-weight: 700; text-transform: uppercase;
             transition: background-color 0.2s;
         }
-        .btn-home:hover {
-            background-color: #258034;
-            color: #fff;
+        .btn-home:hover { background-color: #258034; color: #fff; }
+        
+        /* Centraliza a animação no meio da tela de erro também */
+        .if-blocks-404 {
+            display: flex; align-items: flex-end; gap: 5px; height: 50px; margin-bottom: 2rem;
         }
     </style>
 </head>
@@ -49,15 +41,22 @@
     <header class="site-header">
         <div class="header-container">
             <div class="brand">
+                <a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo"></a>
                 <h1>Jornal Bem Baiano</h1>
             </div>
         </div>
     </header>
 
     <main class="error-container">
+        <div class="if-blocks-404">
+            <div class="if-bar if-bar-1"></div>
+            <div class="if-bar if-bar-2"></div>
+            <div class="if-bar if-bar-3"></div>
+            <div class="if-circle"></div>
+        </div>
         <h1>404</h1>
         <h2>Matéria não encontrada</h2>
-        <p>Parece que o link que você tentou acessar não existe mais ou foi movido. Não se preocupe, a redação principal tem muitas outras notícias para você.</p>
+        <p>Parece que o link que você tentou acessar está quebrado ou foi movido. A redação principal tem muitas outras notícias para você.</p>
         <a href="./index.html" class="btn-home">Voltar para a Capa</a>
     </main>
 </body>

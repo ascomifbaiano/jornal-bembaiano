@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Jornal Bem Baiano</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .contact-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: var(--color-bg-primary); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
+        .contact-container h2 { font-size: 2.5rem; color: var(--color-brand-green); margin-bottom: 1rem; }
+        .contact-container p { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 2rem; }
+        .email-link { font-size: 1.5rem; font-weight: bold; color: var(--color-brand-red); display: inline-block; padding: 1rem 2rem; border: 2px solid var(--color-brand-red); border-radius: 4px; transition: all 0.3s; }
+        .email-link:hover { background: var(--color-brand-red); color: #fff; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="brand">
+                <a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo"></a>
+                <h1>Jornal Bem Baiano</h1>
+            </div>
+            <nav aria-label="Navegação Principal">
+                <ul>
+                    <li><a href="./index.html">Início</a></li>
+                    <li><a href="./index.html#ultimas">Notícias</a></li>
+                    <li><a href="./contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div class="contact-container">
+            <h2>Fale com a Redação</h2>
+            <p>O Jornal Bem Baiano é um canal integrador mantido pela Diretoria de Comunicação (DICOM) do Instituto Federal Baiano.</p>
+            <p>Para envio de sugestões de pautas, correções ou dúvidas institucionais, entre em contato através do nosso e-mail oficial:</p>
+            <a href="mailto:comunicacao@ifbaiano.edu.br" class="email-link">comunicacao@ifbaiano.edu.br</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo Branca">
+                <p>Agregador Oficial de Notícias da Rede Federal na Bahia.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="./politica-privacidade.html">Política de Privacidade</a> | 
+            <a href="./termos.html">Termos de Uso</a>
+        </div>
+    </footer>
+</body>
+</html>

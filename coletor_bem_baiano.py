@@ -1,127 +1,141 @@
-import os
-import re
-import html
 import requests
-import urllib3
 import pandas as pd
+import time
+import os
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+# Lista de Campi e URLs base (WP REST API)
+CAMPI = {
+    "Reitoria": "https://ifbaiano.edu.br/portal",
+    "Alagoinhas": "https://www.ifbaiano.edu.br/unidades/alagoinhas",
+    "Bom Jesus da Lapa": "https://www.ifbaiano.edu.br/unidades/lapa",
+    "Catu": "https://www.ifbaiano.edu.br/unidades/catu",
+    "Governador Mangabeira": "https://www.ifbaiano.edu.br/unidades/gmb",
+    "Guanambi": "https://www.ifbaiano.edu.br/unidades/guanambi",
+    "Itaberaba": "https://www.ifbaiano.edu.br/unidades/itaberaba",
+    "Itapetinga": "https://www.ifbaiano.edu.br/unidades/itapetinga",
+    "Santa Inês": "https://www.ifbaiano.edu.br/unidades/santaines",
+    "Senhor do Bonfim": "https://www.ifbaiano.edu.br/unidades/bonfim",
+    "Serrinha": "https://www.ifbaiano.edu.br/unidades/serrinha",
+    "Teixeira de Freitas": "https://www.ifbaiano.edu.br/unidades/teixeira",
+    "Uruçuca": "https://www.ifbaiano.edu.br/unidades/urucuca",
+    "Valença": "https://www.ifbaiano.edu.br/unidades/valenca",
+    "Xique-Xique": "https://www.ifbaiano.edu.br/unidades/xiquexique"
+}
 
-ARQUIVO_CSV = 'data/historico_noticias.csv'
+def limpar_html(texto):
+    if not isinstance(texto, str):
+        return ""
+    import re
+    texto_limpo = re.sub('<[^<]+?>', '', texto)
+    return texto_limpo.replace('\n', ' ').replace('\r', '').replace('&nbsp;', ' ').strip()
 
-UNIDADES = [
-    { "id": "Reitoria", "url": "https://www.ifbaiano.edu.br/portal/wp-json/wp/v2/posts/" },
-    { "id": "Alagoinhas", "url": "https://www.ifbaiano.edu.br/unidades/alagoinhas/wp-json/wp/v2/posts/" },
-    { "id": "Lapa", "url": "https://www.ifbaiano.edu.br/unidades/lapa/wp-json/wp/v2/posts/" },
-    { "id": "Catu", "url": "https://www.ifbaiano.edu.br/unidades/catu/wp-json/wp/v2/posts/" },
-    { "id": "Mangabeira", "url": "https://www.ifbaiano.edu.br/unidades/gmb/wp-json/wp/v2/posts/" },
-    { "id": "Guanambi", "url": "https://www.ifbaiano.edu.br/unidades/guanambi/wp-json/wp/v2/posts/" },
-    { "id": "Itaberaba", "url": "https://www.ifbaiano.edu.br/unidades/itaberaba/wp-json/wp/v2/posts/" },
-    { "id": "Itapetinga", "url": "https://www.ifbaiano.edu.br/unidades/itapetinga/wp-json/wp/v2/posts/" },
-    { "id": "Santa Inês", "url": "https://www.ifbaiano.edu.br/unidades/santaines/wp-json/wp/v2/posts/" },
-    { "id": "Bonfim", "url": "https://www.ifbaiano.edu.br/unidades/bonfim/wp-json/wp/v2/posts/" },
-    { "id": "Serrinha", "url": "https://www.ifbaiano.edu.br/unidades/serrinha/wp-json/wp/v2/posts/" },
-    { "id": "Teixeira", "url": "https://www.ifbaiano.edu.br/unidades/teixeira/wp-json/wp/v2/posts/" },
-    { "id": "Uruçuca", "url": "https://www.ifbaiano.edu.br/unidades/urucuca/wp-json/wp/v2/posts/" },
-    { "id": "Valença", "url": "https://www.ifbaiano.edu.br/unidades/valenca/wp-json/wp/v2/posts/" },
-    { "id": "Xique-Xique", "url": "https://www.ifbaiano.edu.br/unidades/xique-xique/wp-json/wp/v2/posts/" }
-]
-
-def limpar_tags_html(texto):
-    if not texto: return ''
-    texto_limpo = re.sub(r'<[^>]+>', ' ', str(texto))
-    return html.unescape(texto_limpo).strip()
-
-def extrair_noticias():
-    noticias_coletadas = []
-    links_conhecidos = set(pd.read_csv(ARQUIVO_CSV)['link'].dropna().tolist()) if os.path.exists(ARQUIVO_CSV) else set()
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-
-    for unidade in UNIDADES:
-        print(f"Coletando Rede Interna: {unidade['id']}...")
-        pagina = 1
-        limite_atingido = False
-
-        while not limite_atingido:
-            try:
-                # Usar _embed para trazer a imagem de destaque (thumbnail)
-                url = f"{unidade['url']}?per_page=50&page={pagina}&_embed"
-                response = requests.get(url, headers=headers, timeout=30, verify=False)
-                if response.status_code != 200: break
-                    
-                posts = response.json()
-                if not posts or not isinstance(posts, list): break 
-
-                for post in posts:
-                    link_post = post.get('link', '')
-                    if link_post in links_conhecidos:
-                        print("   ✓ Sincronizado. Notícias antigas ignoradas.")
-                        limite_atingido = True
-                        break
-                        
-                    data_bruta = post.get('date', '')
-                    data_limpa = data_bruta.split('T')[0] if data_bruta else ''
-                    hora_limpa = data_bruta.split('T')[1][:5] if 'T' in data_bruta else '12:00'
-                    titulo_limpo = html.unescape(post.get('title', {}).get('rendered', 'Sem Título'))
-                    
-                    resumo_bruto = post.get('excerpt', {}).get('rendered', '')
-                    resumo_limpo = limpar_tags_html(resumo_bruto)
-                    # Limitar o resumo a 200 caracteres para ficar elegante no card
-                    if len(resumo_limpo) > 200:
-                        resumo_limpo = resumo_limpo[:197] + '...'
-                    
-                    imagem_url = ''
-                    # Acessar a imagem via campo embedded
-                    embedded = post.get('_embedded', {})
-                    if 'wp:featuredmedia' in embedded and len(embedded['wp:featuredmedia']) > 0:
-                        media = embedded['wp:featuredmedia'][0]
-                        if 'source_url' in media:
-                            imagem_url = media['source_url']
-                    
-                    conteudo_html = post.get('content', {}).get('rendered', '')
-                    qtd_palavras = len(re.sub(r'<[^>]+>', ' ', conteudo_html).split())
-                    tempo_leitura = max(1, round(qtd_palavras / 250))
-
-                    noticias_coletadas.append({
-                        'campus': unidade['id'], 
-                        'titulo': titulo_limpo, 
-                        'link': link_post,
-                        'data': data_limpa, 
-                        'hora': hora_limpa, 
-                        'tempo_leitura': tempo_leitura,
-                        'resumo': resumo_limpo,
-                        'imagem': imagem_url
-                    })
+def coletar_noticias(campus, base_url, paginas=3):
+    noticias = []
+    endpoint = f"{base_url}/wp-json/wp/v2/posts?_embed&per_page=10"
+    
+    print(f"Coletando Rede Interna: {campus}...")
+    
+    for page in range(1, paginas + 1):
+        url = f"{endpoint}&page={page}"
+        try:
+            response = requests.get(url, timeout=15)
+            if response.status_code != 200:
+                break
+            
+            dados = response.json()
+            if not dados:
+                break
                 
-                if not limite_atingido: pagina += 1
-            except Exception as e:
-                print(f"   X Falha na rota de {unidade['id']}: {e}")
-                break 
+            for item in dados:
+                # Extração segura de dados
+                titulo = item.get('title', {}).get('rendered', '')
+                titulo = limpar_html(titulo)
+                
+                link = item.get('link', '')
+                data_raw = item.get('date', '')
+                
+                data_formatada = ""
+                hora_formatada = ""
+                if data_raw:
+                    try:
+                        dt = pd.to_datetime(data_raw)
+                        data_formatada = dt.strftime('%Y-%m-%d')
+                        hora_formatada = dt.strftime('%H:%M')
+                    except:
+                        pass
+                
+                resumo_completo = item.get('excerpt', {}).get('rendered', '')
+                resumo_limpo = limpar_html(resumo_completo)
+                # Limita o resumo a 200 caracteres para o grid
+                resumo = resumo_limpo[:200] + '...' if len(resumo_limpo) > 200 else resumo_limpo
+                
+                # Cálculo de tempo de leitura
+                palavras = len(limpar_html(item.get('content', {}).get('rendered', '')).split())
+                tempo_leitura = max(1, palavras // 200)
+                
+                # Imagem destacada (_embed)
+                imagem = ""
+                if '_embedded' in item and 'wp:featuredmedia' in item['_embedded']:
+                    media = item['_embedded']['wp:featuredmedia']
+                    if media and len(media) > 0 and 'source_url' in media[0]:
+                        imagem = media[0]['source_url']
+                
+                noticias.append({
+                    'campus': campus,
+                    'titulo': titulo,
+                    'link': link,
+                    'data': data_formatada,
+                    'hora': hora_formatada,
+                    'tempo_leitura': tempo_leitura,
+                    'resumo': resumo,
+                    'imagem': imagem
+                })
+                
+        except Exception as e:
+            print(f"Erro no campus {campus}, página {page}: {e}")
+            break
+            
+        time.sleep(1) # Respeito à API
+        
+    return noticias
 
-    return pd.DataFrame(noticias_coletadas)
-
-def limpar_e_salvar_dados(df_novo):
-    if df_novo.empty:
-        print("Nenhuma notícia nova coletada hoje.")
-        return
-
-    df_novo = df_novo.dropna(subset=['data'])
-    os.makedirs(os.path.dirname(ARQUIVO_CSV), exist_ok=True)
-
-    if os.path.exists(ARQUIVO_CSV):
-        print(f"Anexando {len(df_novo)} novas notícias ao histórico Bem Baiano...")
-        df_existente = pd.read_csv(ARQUIVO_CSV)
-        df_final = pd.concat([df_novo, df_existente], ignore_index=True).drop_duplicates(subset=['link'], keep='first')
-    else:
-        print("Inaugurando o banco de dados do Jornal Bem Baiano...")
-        df_final = df_novo
-
-    # Forçar codificação utf-8 como requerido
-    df_final.sort_values(by=['data', 'hora'], ascending=[False, False]).to_csv(ARQUIVO_CSV, index=False, encoding='utf-8')
-    print(f"Sucesso! Jornal abastecido com um total de {len(df_final)} matérias históricas.")
+def main():
+    print("Iniciando Motor de Busca Editorial do Jornal Bem Baiano v2...")
+    todas_noticias = []
+    
+    # Criar pastas se não existirem
+    os.makedirs('data', exist_ok=True)
+    os.makedirs('data/campi', exist_ok=True)
+    
+    for campus, url in CAMPI.items():
+        # Coleta 5 páginas (50 notícias mais recentes de cada campus)
+        noticias_campus = coletar_noticias(campus, url, paginas=5)
+        
+        if noticias_campus:
+            df_campus = pd.DataFrame(noticias_campus)
+            # Salvar micro-csv do campus
+            nome_arquivo = campus.lower().replace(' ', '_').replace('-', '_')
+            df_campus.to_csv(f'data/campi/{nome_arquivo}.csv', index=False, encoding='utf-8')
+            
+            todas_noticias.extend(noticias_campus)
+            
+    if todas_noticias:
+        df_geral = pd.DataFrame(todas_noticias)
+        # Ordena da mais recente para a mais antiga
+        df_geral['data_hora'] = pd.to_datetime(df_geral['data'] + ' ' + df_geral['hora'])
+        df_geral = df_geral.sort_values('data_hora', ascending=False)
+        df_geral = df_geral.drop(columns=['data_hora'])
+        
+        # Salva o arquivo global
+        df_geral.to_csv('data/historico_noticias.csv', index=False, encoding='utf-8')
+        
+        # Salva o arquivo apenas com as top 300 para carregamento rápido
+        df_recentes = df_geral.head(300)
+        df_recentes.to_csv('data/geral_recentes.csv', index=False, encoding='utf-8')
+        
+        print(f"Sucesso! Jornal atualizado com um total de {len(todas_noticias)} matérias.")
+    
+    print("Processo editorial finalizado.")
 
 if __name__ == "__main__":
-    print("Iniciando Motor de Busca Editorial do Jornal Bem Baiano...")
-    df = extrair_noticias()
-    limpar_e_salvar_dados(df)
-    print("Processo editorial finalizado.")
+    main()
