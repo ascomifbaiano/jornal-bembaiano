@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jornal Bem Baiano - O portal agregador oficial de notícias da Reitoria e dos campi do IF Baiano.">
+    <title>Jornal Bem Baiano - IF Baiano</title>
+    <!-- SEO and Canonical -->
+    <link rel="canonical" href="https://jornalbembaiano.ifbaiano.edu.br/">
+    <!-- Google Fonts: Roboto for UI, Merriweather for text -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- A11y Toolbar -->
+    <aside class="a11y-toolbar" aria-label="Ferramentas de Acessibilidade">
+        <div class="a11y-container">
+            <button id="btn-contrast" aria-label="Alternar Alto Contraste">◐ Alto Contraste</button>
+            <button id="btn-font-increase" aria-label="Aumentar Fonte">A+</button>
+            <button id="btn-font-decrease" aria-label="Diminuir Fonte">A-</button>
+        </div>
+    </aside>
+
+    <header class="site-header">
+        <div class="header-container">
+            <div class="brand">
+                <h1>Jornal Bem Baiano</h1>
+                <p>Notícias Integradas do IF Baiano</p>
+            </div>
+            <nav aria-label="Navegação Principal">
+                <ul>
+                    <li><a href="./index.html">Início</a></li>
+                    <li><a href="#ultimas">Últimas Notícias</a></li>
+                    <li><a href="./contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section will be populated via JS -->
+        <section id="hero-section" aria-label="Notícia em Destaque">
+            <div class="loading">Carregando destaque...</div>
+        </section>
+
+        <!-- Grid de Notícias -->
+        <section id="ultimas" aria-label="Últimas Notícias da Rede">
+            <div class="section-title">
+                <h2>Últimas da Rede</h2>
+                <div class="campus-filter">
+                    <label for="campus-select">Filtrar por Campus:</label>
+                    <select id="campus-select">
+                        <option value="todos">Todos os Campi</option>
+                        <!-- Options populadas via JS -->
+                    </select>
+                </div>
+            </div>
+            <div id="news-grid" class="news-grid">
+                <div class="loading">Carregando notícias institucionais...</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <strong>Instituto Federal Baiano</strong>
+                <p>Agregador Oficial de Notícias da Rede</p>
+            </div>
+            <div class="footer-links">
+                <a href="./politica-privacidade.html">Política de Privacidade</a>
+                <a href="./termos.html">Termos de Uso</a>
+                <a href="./404.html">Página de Erro (Exemplo)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LGPD Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner" role="alert" aria-live="polite" hidden>
+        <div class="cookie-content">
+            <p>Utilizamos cookies essenciais para personalizar sua navegação e analisar nosso tráfego, em conformidade com a LGPD. Ao continuar navegando, você concorda com a nossa <a href="./politica-privacidade.html">Política de Privacidade</a>.</p>
+            <button id="btn-accept-cookies" class="btn-primary">Entendi e Aceito</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./app.js"></script>
+</body>
+</html>
