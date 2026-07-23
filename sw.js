@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bem-baiano-v2';
+const CACHE_NAME = 'bem-baiano-v3';
 const urlsToCache = [
   './',
   './index.html',

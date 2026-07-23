@@ -57,7 +57,7 @@ a:hover { color: var(--color-text-main); }
 .brand { display: flex; align-items: center; gap: 1rem; }
 /* Aumento de 15% na marca do header (60px -> 69px) */
 .brand img { max-height: 69px; }
-.brand h1 { font-family: var(--font-editorial); font-size: 1.725rem; font-weight: 700; color: var(--color-brand-green-dark); }
+.site-title { font-family: var(--font-editorial); font-size: 1.8rem; font-weight: 700; color: var(--color-brand-green-dark); text-align: center; flex: 1; margin: 0 1rem; }
 .site-header nav ul { display: flex; list-style: none; gap: 1.5rem; }
 .site-header nav a { font-weight: 700; color: var(--color-text-main); text-transform: uppercase; font-size: 0.95rem; }
 .site-header nav a:hover { color: var(--color-brand-green); }
