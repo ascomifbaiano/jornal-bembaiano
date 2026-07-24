@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jornal Bem Baiano - Agregador Oficial de Notícias do IF Baiano">
-    <title>Jornal Bem Baiano</title>
+    <meta name="description" content="Jornal Bem Baiano - Agregador Oficial de Notícias e Comunicação do IF Baiano">
+    <title>Jornal Bem Baiano | IF Baiano</title>
     <link rel="canonical" href="https://ascomifbaiano.github.io/jornal-bembaiano/">
     
     <!-- Favicon Oficial IF Baiano -->
@@ -17,8 +17,8 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3E9A2D">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Merriweather (Editorial) + Outfit (Modern UI) -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -30,55 +30,92 @@
             <div class="if-bar if-bar-3"></div>
             <div class="if-circle"></div>
         </div>
-        <p style="margin-top:20px; font-weight:bold; font-size:14px; text-transform:uppercase; letter-spacing:2px; color:var(--color-brand-green);">Construindo Rede...</p>
+        <p style="margin-top:20px; font-weight:bold; font-size:14px; text-transform:uppercase; letter-spacing:2px; color:var(--color-brand-green);">Carregando Edição...</p>
     </div>
 
-    <!-- A11y -->
-    <aside class="a11y-toolbar" aria-label="Acessibilidade">
-        <div class="a11y-container">
-            <button id="btn-contrast">◐ Alto Contraste</button>
-            <button id="btn-font-increase">A+</button>
-            <button id="btn-font-decrease">A-</button>
-        </div>
-    </aside>
-
-    <header class="site-header">
-        <div class="header-container">
-            <div class="brand">
-                <a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo"></a>
+    <!-- Barra Superior de Utilidades e Portais Oficiais -->
+    <div class="top-bar" aria-label="Barra Institucional e Acessibilidade">
+        <div class="top-bar-container">
+            <div class="top-date-info">
+                <span id="current-date-str">📅 Carregando data...</span>
+                <span class="edition-badge">Edição Digital</span>
             </div>
-            <h1 class="site-title">Jornal Bem Baiano</h1>
-            <nav aria-label="Navegação Principal">
+            
+            <div class="official-portals-links">
+                <span class="portals-label">Portais Oficiais:</span>
+                <a href="https://ifbaiano.edu.br/portal/" target="_blank" rel="noopener" title="Portal Principal do IF Baiano">🌐 Portal IF Baiano</a>
+                <a href="https://ingresso.ifbaiano.edu.br/portal/" target="_blank" rel="noopener" class="highlight-portal" title="Portal de Ingresso e Seleções">🎓 Portal de Ingresso</a>
+                <a href="https://suap.ifbaiano.edu.br/" target="_blank" rel="noopener" title="Sistema Unificado de Administração Pública">📑 SUAP</a>
+            </div>
+
+            <div class="a11y-controls">
+                <button id="btn-contrast" title="Alternar Alto Contraste">◐ Contraste</button>
+                <button id="btn-font-increase" title="Aumentar Fonte">A+</button>
+                <button id="btn-font-decrease" title="Diminuir Fonte">A-</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Masthead Jornalístico -->
+    <header class="newspaper-header">
+        <div class="header-container">
+            <div class="header-masthead">
+                <div class="brand-logo">
+                    <a href="./index.html"><img src="./marca-if-baiano-horizontal.png" alt="Logotipo Oficial IF Baiano"></a>
+                </div>
+                <div class="masthead-title-block">
+                    <h1 class="newspaper-title"><a href="./index.html">JORNAL BEM BAIANO</a></h1>
+                    <p class="newspaper-tagline">O Agregador de Notícias e Comunicação da Rede Federal no Estado da Bahia</p>
+                </div>
+            </div>
+            
+            <div class="hairline-divider"></div>
+            
+            <nav class="main-menu" aria-label="Menu de Navegação Principal">
                 <ul>
-                    <li><a href="./index.html">Início</a></li>
-                    <li><a href="#ultimas">Notícias</a></li>
-                    <li><a href="./contato.html">Contato</a></li>
+                    <li><a href="./index.html" class="active">Página Inicial</a></li>
+                    <li><a href="#ultimas">Notícias da Rede</a></li>
+                    <li><a href="https://ingresso.ifbaiano.edu.br/portal/" target="_blank">Editais & Seleções</a></li>
+                    <li><a href="./contato.html">Contato & ASCOM</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main id="main-content">
-        <!-- Destaque -->
-        <section id="hero-section" aria-label="Destaque"></section>
+    <!-- Plantão de Notícias (Ticker de Útimas Horas) -->
+    <div class="breaking-news-bar" aria-label="Plantão de Notícias">
+        <div class="breaking-container">
+            <span class="breaking-badge">⚡ PLANTÃO IF BAIANO</span>
+            <div class="ticker-content" id="breaking-news-ticker">
+                <span>Carregando as últimas atualizações da Rede Federal...</span>
+            </div>
+        </div>
+    </div>
 
-        <!-- Menu Rápido de Categorias (Texto) -->
-        <nav class="category-nav" aria-label="Filtro Rápido de Categorias">
-            <a class="cat-link active" data-cat="todas">Últimas Notícias</a>
-            <a class="cat-link" data-cat="Eventos">Eventos</a>
-            <a class="cat-link" data-cat="Resultados">Resultados</a>
-            <a class="cat-link" data-cat="Editais e Seleções">Editais</a>
+    <main id="main-content">
+        <!-- Manchete de Capa / Destaque Principal -->
+        <section id="hero-section" class="hero-section" aria-label="Manchete Principal de Capa"></section>
+
+        <!-- Menu Rápido de Categorias (Estilo Abas Jornalísticas) -->
+        <nav class="category-nav" aria-label="Filtro Rápido de Seções">
+            <a class="cat-link active" data-cat="todas">📰 Todas as Matérias</a>
+            <a class="cat-link" data-cat="Editais e Seleções">🎓 Editais & Ingresso</a>
+            <a class="cat-link" data-cat="Eventos">📅 Eventos</a>
+            <a class="cat-link" data-cat="Resultados">🏆 Resultados</a>
         </nav>
 
-        <!-- Filtros Secundários e Grid -->
-        <section id="ultimas" aria-label="Últimas Notícias">
+        <!-- Filtros Secundários e Grid Principal -->
+        <section id="ultimas" class="news-section" aria-label="Feed de Notícias">
             <div class="filters-bar">
-                <input type="search" id="search-input" placeholder="🔍 Pesquisar matérias, nomes, locais...">
+                <div class="search-box">
+                    <input type="search" id="search-input" placeholder="🔍 Pesquisar por título, palavra-chave, cidade..." aria-label="Pesquisar notícias">
+                </div>
                 <div class="filters-group">
-                    <select id="campus-select" aria-label="Filtrar por Campus">
-                        <option value="todos">Toda a Rede</option>
-                        <!-- Populado pelo app.js -->
+                    <select id="campus-select" aria-label="Filtrar por Campus do IF Baiano">
+                        <option value="todos">🏛️ Toda a Rede (14 Campi + Reitoria)</option>
+                        <!-- Populado dinamicamente pelo app.js -->
                     </select>
+                    <button id="btn-show-saved" class="btn-secondary" title="Ver notícias salvas/favoritas">🔖 Salvas</button>
                 </div>
             </div>
             
@@ -87,35 +124,52 @@
         </section>
     </main>
 
+    <!-- Rodapé Institucional Ampliado -->
     <footer class="site-footer">
         <div class="footer-container">
-            <div class="footer-brand">
-                <img src="./marca-if-baiano-horizontal.png" alt="IF Baiano Logo Branca">
-                <p>Agregador Oficial de Notícias da Rede Federal na Bahia.</p>
+            <div class="footer-col brand-col">
+                <img src="./marca-if-baiano-horizontal.png" alt="Logotipo IF Baiano Branca" class="footer-logo">
+                <p class="footer-desc">Jornal Bem Baiano — Veículo de comunicação e integração jornalística da comunidade acadêmica do Instituto Federal de Educação, Ciência e Tecnologia Baiano.</p>
             </div>
-            <div class="footer-social">
-                <h4>Nossas Redes</h4>
+            
+            <div class="footer-col links-col">
+                <h4>Portais Oficiais</h4>
+                <ul>
+                    <li><a href="https://ifbaiano.edu.br/portal/" target="_blank" rel="noopener">Portal Institucional Reitoria</a></li>
+                    <li><a href="https://ingresso.ifbaiano.edu.br/portal/" target="_blank" rel="noopener">Portal de Ingresso de Estudantes</a></li>
+                    <li><a href="https://suap.ifbaiano.edu.br/" target="_blank" rel="noopener">SUAP - Sistema Unificado</a></li>
+                    <li><a href="https://ifbaiano.edu.br/portal/concursos/" target="_blank" rel="noopener">Concursos & Seleções</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col social-col">
+                <h4>Comunicação Social (ASCOM)</h4>
                 <div class="social-links">
-                    <a href="https://instagram.com/ifbaiano" target="_blank" class="social-icon">
+                    <a href="https://instagram.com/ifbaiano" target="_blank" rel="noopener" class="social-icon">
                         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        @ifbaiano
+                        Instagram @ifbaiano
                     </a>
-                    <a href="https://www.youtube.com/@TVBemBaiano" target="_blank" class="social-icon">
+                    <a href="https://www.youtube.com/@TVBemBaiano" target="_blank" rel="noopener" class="social-icon">
                         <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                         TV Bem Baiano
                     </a>
                 </div>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <a href="./politica-privacidade.html">Política de Privacidade</a> | 
-            <a href="./termos.html">Termos de Uso</a>
+            <p>&copy; 2026 Instituto Federal de Educação, Ciência e Tecnologia Baiano. Todos os direitos reservados.</p>
+            <div class="footer-legal">
+                <a href="./politica-privacidade.html">Política de Privacidade</a> | 
+                <a href="./termos.html">Termos de Uso</a>
+            </div>
         </div>
     </footer>
 
+    <!-- LGPD Banner -->
     <div id="cookie-banner" class="cookie-banner" hidden>
         <div class="cookie-content">
-            <p><strong>Aviso de Cookies e Privacidade:</strong> O IF Baiano respeita seus dados. Usamos cookies funcionais apenas para salvar suas preferências (como o modo de alto contraste) no seu próprio navegador, sem rastreamento pessoal, garantindo adequação à LGPD. <a href="./politica-privacidade.html" style="color:var(--color-brand-green); text-decoration:underline;">Leia mais na Política de Privacidade</a>.</p>
+            <p><strong>Aviso de Privacidade e Cookies:</strong> O IF Baiano respeita a LGPD. Usamos cookies funcionais no seu próprio navegador apenas para salvar suas preferências (como o modo de alto contraste), sem rastreamento de dados pessoais. <a href="./politica-privacidade.html">Saiba mais em nossa Política de Privacidade</a>.</p>
             <button id="btn-accept-cookies" class="btn-primary">Concordar e Fechar</button>
         </div>
     </div>
